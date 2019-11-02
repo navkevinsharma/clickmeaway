@@ -41,12 +41,15 @@ class App extends Component {
 
     var imageId = event.target.getAttribute('data-id');
 
-    debugger;
+    let bool = false;
 
-    if (this.state.data[imageId-1].clicked == false){
+    for (let i=0; i<this.state.data.length; i++){
+      if (this.state.data[i].id == imageId) bool = true;
+    }
+
+    if (bool){
 
       //need to make clicked to true
-
 
       let data = this.state.data.map(item => {
         if (item.id == imageId) item.clicked = true;
@@ -61,6 +64,13 @@ class App extends Component {
       this.setState({
         data,
         score
+      }, ()=>{
+        if (this.state.score == this.state.data.length){
+          this.setState({
+            topscore: this.state.score,
+            score: 0
+          })
+        }
       }) 
 
     }else{
@@ -68,7 +78,7 @@ class App extends Component {
         topscore: this.state.score,
         score: 0
       }) 
-    }    
+    }
   }
 
   render() {
